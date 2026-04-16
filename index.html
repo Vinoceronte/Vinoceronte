@@ -6,15 +6,7 @@
   <title>Ordine Reale - Vinocerordine</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #f8f0ff 0%, #fff5f5 100%);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 16px;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: linear-gradient(135deg, #f8f0ff 0%, #fff5f5 100%); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 16px; }
     .header { width: 100%; max-width: 500px; border-radius: 20px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(74,0,128,0.2); }
     .header-top { background: #fdf6f0; padding: 22px 20px; text-align: center; font-size: 30px; font-weight: 900; color: #111; }
     .header-top span { color: #c0392b; }
@@ -41,7 +33,6 @@
     .btn-success { background: linear-gradient(135deg, #43a047, #2e7d32); color: white; }
     .btn-danger { background: linear-gradient(135deg, #e53935, #c0392b); color: white; }
     .sessione-input { width: 100%; padding: 14px; border: 2px solid #d9b3ff; border-radius: 12px; font-size: 16px; margin-bottom: 16px; outline: none; }
-    .sessione-input:focus { border-color: #4a0080; }
     .lista-ordini { width: 100%; max-width: 500px; }
     .ordine-item { background: white; border-radius: 14px; padding: 14px 18px; margin-bottom: 10px; box-shadow: 0 2px 10px rgba(74,0,128,0.08); border-left: 4px solid #6a0dad; }
     .ordine-produttore { color: #4a0080; font-weight: 700; font-size: 15px; }
@@ -101,6 +92,26 @@
 
   let step = 'vino', vinoCorrente = null, bottiglia = 0, prezzo = 0;
   let ordini = [], sessione = '', recognition = null, recording = false;
+  let cbCounter = 0;
+
+  // JSONP - bypassa il CORS
+  function jsonpCall(url, callback) {
+    const cbName = 'cb_' + (++cbCounter);
+    window[cbName] = function(data) {
+      delete window[cbName];
+      document.getElementById('jsonp-' + cbName) && document.getElementById('jsonp-' + cbName).remove();
+      callback(data);
+    };
+    const script = document.createElement('script');
+    script.id = 'jsonp-' + cbName;
+    script.src = url + '&callback=' + cbName;
+    script.onerror = function() {
+      delete window[cbName];
+      script.remove();
+      callback(null);
+    };
+    document.head.appendChild(script);
+  }
 
   function iniziaSessione() {
     sessione = document.getElementById('nomeSessione').value.trim();
@@ -183,23 +194,21 @@
     if (step === 'vino') {
       document.getElementById('loader').style.display = 'block';
       document.getElementById('btn-cerca').style.display = 'none';
-      fetch(SCRIPT_URL + '?action=cercaVino&query=' + encodeURIComponent(testo))
-        .then(r => r.json())
-        .then(r => {
-          document.getElementById('loader').style.display = 'none';
-          if (r.trovato) {
-            vinoCorrente = r;
-            mostraOk('✅ Trovato: <strong>' + r.nomeCompleto + '</strong>');
-          } else {
-            document.getElementById('btn-cerca').style.display = 'block';
-            mostraNo('❌ Vino non trovato — riprova con un nome diverso');
-          }
-        })
-        .catch(() => {
-          document.getElementById('loader').style.display = 'none';
+      jsonpCall(SCRIPT_URL + '?action=cercaVino&query=' + encodeURIComponent(testo), function(r) {
+        document.getElementById('loader').style.display = 'none';
+        if (!r) {
           document.getElementById('btn-cerca').style.display = 'block';
           mostraNo('❌ Errore di connessione — riprova');
-        });
+          return;
+        }
+        if (r.trovato) {
+          vinoCorrente = r;
+          mostraOk('✅ Trovato: <strong>' + r.nomeCompleto + '</strong>');
+        } else {
+          document.getElementById('btn-cerca').style.display = 'block';
+          mostraNo('❌ Vino non trovato — riprova con un nome diverso');
+        }
+      });
     } else if (step === 'bottiglie') {
       const n = estraiNumero(testo);
       if (n > 0) { bottiglia = n; mostraOk('✅ <strong>' + n + '</strong> bottiglie'); }
@@ -288,9 +297,8 @@
 
   function salvaEFinisci() {
     mostraStatus('💾 Salvataggio in corso...', 'ok');
-    fetch(SCRIPT_URL + '?action=salvaOrdini&data=' + encodeURIComponent(JSON.stringify(ordini)))
-      .then(r => r.json())
-      .then(() => {
+    jsonpCall(SCRIPT_URL + '?action=salvaOrdini&data=' + encodeURIComponent(JSON.stringify(ordini)), function(r) {
+      if (r) {
         mostraStatus('✅ Salvato in Sheets!', 'ok');
         setTimeout(() => {
           ordini = []; aggiornaLista();
@@ -298,8 +306,10 @@
           document.getElementById('card-sessione').style.display = 'block';
           document.getElementById('nomeSessione').value = '';
         }, 2000);
-      })
-      .catch(() => mostraStatus('❌ Errore salvataggio — riprova!', 'no'));
+      } else {
+        mostraStatus('❌ Errore salvataggio — riprova!', 'no');
+      }
+    });
   }
 
   function annullaEsci() {
