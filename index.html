@@ -16,12 +16,10 @@
     .hint { text-align: center; color: #aaa; font-size: 13px; margin-bottom: 12px; }
     .testo-input { width: 100%; padding: 14px; border: 2px solid #d9b3ff; border-radius: 12px; font-size: 16px; margin-bottom: 12px; outline: none; transition: border 0.2s; }
     .testo-input:focus { border-color: #4a0080; }
-    /* Rimuove frecce dai campi numerici */
     .numero-input { width: 100%; padding: 14px; border: 2px solid #d9b3ff; border-radius: 12px; font-size: 20px; text-align: center; margin-bottom: 12px; outline: none; transition: border 0.2s; -moz-appearance: textfield; }
     .numero-input:focus { border-color: #4a0080; }
     .numero-input::-webkit-outer-spin-button,
     .numero-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-    /* Campo prezzo con simbolo € */
     .prezzo-wrapper { position: relative; margin-bottom: 12px; }
     .prezzo-wrapper .euro { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 20px; font-weight: 700; color: #4a0080; pointer-events: none; }
     .prezzo-wrapper .numero-input { padding-left: 36px; margin-bottom: 0; }
@@ -67,7 +65,6 @@
   <div class="header-bar">📦 REGISTRAZIONE ORDINE REALE</div>
 </div>
 
-<!-- STEP 0: Nome sessione -->
 <div class="card" id="card-sessione">
   <div class="domanda">📝 Nome sessione</div>
   <p class="hint">Es. "Kabaj 15 apr" oppure "Giro Slovenia aprile"</p>
@@ -75,7 +72,6 @@
   <button class="btn btn-primary" onclick="iniziaSessione()">Inizia</button>
 </div>
 
-<!-- STEP 1: Cerca vino -->
 <div class="card" id="card-vino" style="display:none;">
   <div class="domanda">🍷 Qual è il vino?</div>
   <p class="hint">Scrivi il nome e premi Cerca</p>
@@ -83,8 +79,6 @@
   <button class="btn btn-primary" id="btn-cerca" onclick="cercaVino()">🔍 Cerca</button>
   <div class="loader" id="loader-vino">🔍 Sto cercando...</div>
   <div class="feedback no" id="feedback-vino-no"></div>
-
-  <!-- Risultato singolo -->
   <div class="vino-trovato" id="vino-trovato-singolo">
     <div class="label">✅ Trovato — è questo?</div>
     <div class="produttore" id="vino-singolo-produttore"></div>
@@ -92,13 +86,10 @@
   </div>
   <button class="btn btn-success" id="btn-conferma-singolo" onclick="confermaSingolo()" style="display:none;">✅ Sì, è questo!</button>
   <button class="btn btn-secondary" id="btn-riprova-singolo" onclick="riprovaCerca()" style="display:none;">🔄 Cerca di nuovo</button>
-
-  <!-- Lista risultati multipli -->
   <div class="lista-vini" id="lista-vini"></div>
   <div class="status-msg" id="status-vino"></div>
 </div>
 
-<!-- STEP 2: Bottiglie -->
 <div class="card" id="card-bottiglie" style="display:none;">
   <div class="domanda">📦 Quante bottiglie?</div>
   <div class="vino-selezionato-info" id="info-bt"></div>
@@ -107,7 +98,6 @@
   <div class="feedback no" id="feedback-bottiglie-no"></div>
 </div>
 
-<!-- STEP 3: Prezzo -->
 <div class="card" id="card-prezzo" style="display:none;">
   <div class="domanda">💶 Prezzo per bottiglia?</div>
   <div class="vino-selezionato-info" id="info-pr"></div>
@@ -119,10 +109,8 @@
   <div class="feedback no" id="feedback-prezzo-no"></div>
 </div>
 
-<!-- Lista ordini -->
 <div class="lista-ordini" id="lista-ordini"></div>
 
-<!-- STEP finale -->
 <div class="card" id="card-fine" style="display:none;">
   <div class="sezione-title">Cosa vuoi fare?</div>
   <button class="btn btn-success" onclick="salvaEFinisci()">💾 Salva tutto in Sheets</button>
@@ -159,10 +147,40 @@
     setTimeout(() => s.style.display = 'none', 3000);
   }
 
+  // Reset completo della card vino
+  function resetCardVino() {
+    document.getElementById('input-vino').value = '';
+    document.getElementById('lista-vini').innerHTML = '';
+    document.getElementById('feedback-vino-no').style.display = 'none';
+    document.getElementById('vino-trovato-singolo').style.display = 'none';
+    document.getElementById('btn-conferma-singolo').style.display = 'none';
+    document.getElementById('btn-riprova-singolo').style.display = 'none';
+    document.getElementById('btn-cerca').style.display = 'block';
+    document.getElementById('loader-vino').style.display = 'none';
+  }
+
   // ---- SESSIONE ----
   function iniziaSessione() {
     sessione = document.getElementById('nomeSessione').value.trim();
     if (!sessione) { alert('Inserisci un nome per la sessione!'); return; }
+
+    // Reset completo di tutto
+    ordini = [];
+    vinoCorrente = null;
+    aggiornaLista();
+    resetCardVino();
+
+    // Reset bottiglie e prezzo
+    document.getElementById('input-bottiglie').value = '';
+    document.getElementById('input-prezzo').value = '';
+    document.getElementById('feedback-bottiglie-no').style.display = 'none';
+    document.getElementById('feedback-prezzo-no').style.display = 'none';
+
+    // Nascondi tutte le card
+    ['card-fine', 'card-bottiglie', 'card-prezzo'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+
     document.getElementById('card-sessione').style.display = 'none';
     document.getElementById('card-vino').style.display = 'block';
     document.getElementById('input-vino').focus();
@@ -214,11 +232,7 @@
   function confermaSingolo() { vai_a_bottiglie(); }
 
   function riprovaCerca() {
-    document.getElementById('vino-trovato-singolo').style.display = 'none';
-    document.getElementById('btn-conferma-singolo').style.display = 'none';
-    document.getElementById('btn-riprova-singolo').style.display = 'none';
-    document.getElementById('btn-cerca').style.display = 'block';
-    document.getElementById('input-vino').value = '';
+    resetCardVino();
     document.getElementById('input-vino').focus();
   }
 
@@ -310,13 +324,7 @@
     vinoCorrente = null;
     document.getElementById('card-fine').style.display = 'none';
     document.getElementById('card-vino').style.display = 'block';
-    document.getElementById('input-vino').value = '';
-    document.getElementById('lista-vini').innerHTML = '';
-    document.getElementById('feedback-vino-no').style.display = 'none';
-    document.getElementById('vino-trovato-singolo').style.display = 'none';
-    document.getElementById('btn-conferma-singolo').style.display = 'none';
-    document.getElementById('btn-riprova-singolo').style.display = 'none';
-    document.getElementById('btn-cerca').style.display = 'block';
+    resetCardVino();
     document.getElementById('input-vino').focus();
   }
 
@@ -339,20 +347,22 @@
 
   function annullaEsci() {
     if (confirm('Sicuro? Perderai tutto!')) {
-      ordini = []; aggiornaLista();
+      ordini = []; vinoCorrente = null;
+      aggiornaLista();
       ['card-fine','card-vino','card-bottiglie','card-prezzo'].forEach(id => {
         document.getElementById(id).style.display = 'none';
       });
+      resetCardVino();
       document.getElementById('card-sessione').style.display = 'block';
       document.getElementById('nomeSessione').value = '';
     }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('nomeSessione').addEventListener('keypress', e => { if (e.key === 'Enter') iniziaSessione(); });
     document.getElementById('input-vino').addEventListener('keypress', e => { if (e.key === 'Enter') cercaVino(); });
     document.getElementById('input-bottiglie').addEventListener('keypress', e => { if (e.key === 'Enter') confermaBottiglie(); });
     document.getElementById('input-prezzo').addEventListener('keypress', e => { if (e.key === 'Enter') confermaPrezzo(); });
-    document.getElementById('nomeSessione').addEventListener('keypress', e => { if (e.key === 'Enter') iniziaSessione(); });
   });
 </script>
 </body>
