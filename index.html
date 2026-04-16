@@ -86,7 +86,6 @@
     .mic-btn.recording {
       background: linear-gradient(145deg, #e74c3c, #c0392b);
       animation: pulse 1s infinite;
-      box-shadow: 0 6px 20px rgba(192,57,43,0.4);
     }
 
     @keyframes pulse {
@@ -99,8 +98,38 @@
       text-align: center;
       color: #aaa;
       font-size: 13px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
+
+    .separatore {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 12px 0;
+      color: #ccc;
+      font-size: 13px;
+    }
+
+    .separatore::before,
+    .separatore::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #f0e6ff;
+    }
+
+    .testo-input {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #d9b3ff;
+      border-radius: 12px;
+      font-size: 16px;
+      margin-bottom: 12px;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .testo-input:focus { border-color: #4a0080; }
 
     .trascrizione {
       background: #f8f0ff;
@@ -112,6 +141,7 @@
       font-size: 18px;
       margin-bottom: 16px;
       border: 2px solid #e8d5ff;
+      display: none;
     }
 
     .feedback {
@@ -143,6 +173,7 @@
     .btn-secondary { background: #f0e6ff; color: #4a0080; }
     .btn-success { background: linear-gradient(135deg, #43a047, #2e7d32); color: white; }
     .btn-danger { background: linear-gradient(135deg, #e53935, #c0392b); color: white; }
+    .btn-cerca { background: linear-gradient(135deg, #6a0dad, #4a0080); color: white; box-shadow: 0 4px 12px rgba(74,0,128,0.3); }
 
     .sessione-input {
       width: 100%;
@@ -202,8 +233,6 @@
     .status-msg.ok { background: #e8f5e9; color: #2e7d32; }
     .status-msg.no { background: #ffebee; color: #c62828; }
 
-    .divider { height: 1px; background: #f0e6ff; margin: 4px 0 14px; }
-
     .loader {
       text-align: center;
       color: #4a0080;
@@ -211,6 +240,8 @@
       padding: 10px;
       display: none;
     }
+
+    .divider { height: 1px; background: #f0e6ff; margin: 4px 0 14px; }
   </style>
 </head>
 <body>
@@ -228,21 +259,31 @@
   <button class="btn btn-primary" onclick="iniziaSessione()">▶ Inizia registrazione</button>
 </div>
 
-<!-- STEP 1-3: Domande vocali -->
+<!-- STEP 1-3: Domande -->
 <div class="card" id="card-vino" style="display:none;">
   <div class="domanda" id="testo-domanda">🍷 Qual è il vino?</div>
+
+  <!-- Microfono -->
   <button class="mic-btn" id="mic-btn" onclick="toggleRec()">🎙️</button>
   <p class="hint" id="hint-mic">Premi e parla</p>
   <div class="trascrizione" id="trascrizione">—</div>
+
+  <!-- Separatore -->
+  <div class="separatore">oppure scrivi</div>
+
+  <!-- Input testo -->
+  <input type="text" class="testo-input" id="testo-manuale" placeholder="Scrivi qui...">
+  <button class="btn btn-cerca" id="btn-cerca" onclick="cercaTesto()">🔍 Cerca</button>
+
   <div class="feedback ok" id="feedback-ok"></div>
   <div class="feedback no" id="feedback-no"></div>
-  <div class="loader" id="loader">🔍 Sto cercando il vino...</div>
+  <div class="loader" id="loader">🔍 Sto cercando...</div>
   <div class="status-msg" id="status-msg"></div>
   <button class="btn btn-primary" id="btn-conferma" onclick="conferma()" style="display:none;">✅ Conferma</button>
   <button class="btn btn-secondary" id="btn-riprova" onclick="riprova()" style="display:none;">🔄 Riprova</button>
 </div>
 
-<!-- Lista ordini sessione -->
+<!-- Lista ordini -->
 <div class="lista-ordini" id="lista-ordini"></div>
 
 <!-- STEP finale -->
@@ -255,7 +296,6 @@
 </div>
 
 <script>
-  // URL della tua web app Google Apps Script
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzw4P2lLuFELMB3EToaN5gvCQSd-2jlfn5Gg7ud2hf022AqrH4ZcksV4NvO46uRVOW-/exec";
 
   let step = 'vino';
@@ -281,14 +321,18 @@
     bottiglia = 0;
     prezzo = 0;
     document.getElementById('testo-domanda').textContent = '🍷 Qual è il vino?';
-    document.getElementById('hint-mic').textContent = 'Dì il nome del vino';
+    document.getElementById('hint-mic').textContent = 'Premi e parla';
+    document.getElementById('testo-manuale').placeholder = 'Scrivi il nome del vino...';
+    document.getElementById('btn-cerca').style.display = 'block';
     reset();
     document.getElementById('card-fine').style.display = 'none';
     aggiornaLista();
   }
 
   function reset() {
+    document.getElementById('trascrizione').style.display = 'none';
     document.getElementById('trascrizione').textContent = '—';
+    document.getElementById('testo-manuale').value = '';
     document.getElementById('feedback-ok').style.display = 'none';
     document.getElementById('feedback-no').style.display = 'none';
     document.getElementById('btn-conferma').style.display = 'none';
@@ -297,23 +341,31 @@
     document.getElementById('loader').style.display = 'none';
   }
 
+  // ---- MICROFONO ----
   function toggleRec() {
     if (recording) { stopRec(); } else { startRec(); }
   }
 
   function startRec() {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) { alert('Usa Chrome per il riconoscimento vocale!'); return; }
+    if (!SR) {
+      mostraStatus('Microfono non supportato — usa il campo testo!', 'no');
+      return;
+    }
     recognition = new SR();
     recognition.lang = 'it-IT';
     recognition.continuous = false;
     recognition.interimResults = false;
     recognition.onresult = e => {
       const testo = e.results[0][0].transcript;
+      document.getElementById('trascrizione').style.display = 'block';
       document.getElementById('trascrizione').textContent = testo;
       elaboraTesto(testo);
     };
-    recognition.onerror = () => { stopRec(); mostraStatus('Errore microfono — riprova!', 'no'); };
+    recognition.onerror = () => {
+      stopRec();
+      mostraStatus('Errore microfono — usa il campo testo!', 'no');
+    };
     recognition.onend = () => stopRec();
     recognition.start();
     recording = true;
@@ -330,9 +382,27 @@
     document.getElementById('hint-mic').textContent = 'Premi e parla';
   }
 
+  // ---- INPUT TESTO ----
+  function cercaTesto() {
+    const testo = document.getElementById('testo-manuale').value.trim();
+    if (!testo) { alert('Scrivi qualcosa!'); return; }
+    document.getElementById('trascrizione').style.display = 'block';
+    document.getElementById('trascrizione').textContent = testo;
+    elaboraTesto(testo);
+  }
+
+  // Permetti invio con Enter nel campo testo
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('testo-manuale').addEventListener('keypress', e => {
+      if (e.key === 'Enter') cercaTesto();
+    });
+  });
+
+  // ---- ELABORAZIONE ----
   function elaboraTesto(testo) {
     if (step === 'vino') {
       document.getElementById('loader').style.display = 'block';
+      document.getElementById('btn-cerca').style.display = 'none';
       fetch(SCRIPT_URL + '?action=cercaVino&query=' + encodeURIComponent(testo))
         .then(r => r.json())
         .then(r => {
@@ -341,11 +411,13 @@
             vinoCorrente = r;
             mostraOk('✅ Trovato: <strong>' + r.nomeCompleto + '</strong>');
           } else {
+            document.getElementById('btn-cerca').style.display = 'block';
             mostraNo('❌ Vino non trovato — riprova con un nome diverso');
           }
         })
         .catch(() => {
           document.getElementById('loader').style.display = 'none';
+          document.getElementById('btn-cerca').style.display = 'block';
           mostraNo('❌ Errore di connessione — riprova');
         });
     } else if (step === 'bottiglie') {
@@ -403,12 +475,16 @@
     if (step === 'vino') {
       step = 'bottiglie';
       document.getElementById('testo-domanda').textContent = '📦 Quante bottiglie?';
-      document.getElementById('hint-mic').textContent = 'Dì il numero di bottiglie';
+      document.getElementById('hint-mic').textContent = 'Premi e parla';
+      document.getElementById('testo-manuale').placeholder = 'Scrivi il numero...';
+      document.getElementById('btn-cerca').style.display = 'block';
       reset();
     } else if (step === 'bottiglie') {
       step = 'prezzo';
       document.getElementById('testo-domanda').textContent = '💶 Prezzo pagato per bottiglia?';
-      document.getElementById('hint-mic').textContent = 'Dì il prezzo in euro';
+      document.getElementById('hint-mic').textContent = 'Premi e parla';
+      document.getElementById('testo-manuale').placeholder = 'Scrivi il prezzo in euro...';
+      document.getElementById('btn-cerca').style.display = 'block';
       reset();
     } else if (step === 'prezzo') {
       ordini.push({
@@ -424,7 +500,10 @@
     }
   }
 
-  function riprova() { reset(); }
+  function riprova() {
+    reset();
+    document.getElementById('btn-cerca').style.display = 'block';
+  }
 
   function aggiornaLista() {
     const lista = document.getElementById('lista-ordini');
