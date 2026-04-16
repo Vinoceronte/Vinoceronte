@@ -6,7 +6,6 @@
   <title>Ordine Reale - Vinocerordine</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #f8f0ff 0%, #fff5f5 100%);
@@ -16,231 +15,44 @@
       align-items: center;
       padding: 16px;
     }
-
-    .header {
-      width: 100%;
-      max-width: 500px;
-      border-radius: 20px;
-      overflow: hidden;
-      margin-bottom: 20px;
-      box-shadow: 0 8px 30px rgba(74,0,128,0.2);
-    }
-
-    .header-top {
-      background: #fdf6f0;
-      padding: 22px 20px;
-      text-align: center;
-      font-size: 30px;
-      font-weight: 900;
-      color: #111;
-    }
-
+    .header { width: 100%; max-width: 500px; border-radius: 20px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(74,0,128,0.2); }
+    .header-top { background: #fdf6f0; padding: 22px 20px; text-align: center; font-size: 30px; font-weight: 900; color: #111; }
     .header-top span { color: #c0392b; }
-
-    .header-bar {
-      background: #4a0080;
-      color: white;
-      text-align: center;
-      padding: 11px;
-      font-size: 13px;
-      letter-spacing: 1.5px;
-      font-weight: 700;
-    }
-
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 24px;
-      width: 100%;
-      max-width: 500px;
-      box-shadow: 0 4px 24px rgba(74,0,128,0.08);
-      margin-bottom: 16px;
-      border: 1px solid #f0e6ff;
-    }
-
-    .domanda {
-      font-size: 22px;
-      font-weight: 700;
-      color: #4a0080;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .mic-btn {
-      width: 110px;
-      height: 110px;
-      border-radius: 55px;
-      border: none;
-      background: linear-gradient(145deg, #6a0dad, #4a0080);
-      color: white;
-      font-size: 42px;
-      cursor: pointer;
-      display: block;
-      margin: 0 auto 12px;
-      transition: all 0.3s;
-      box-shadow: 0 6px 20px rgba(74,0,128,0.35);
-    }
-
+    .header-bar { background: #4a0080; color: white; text-align: center; padding: 11px; font-size: 13px; letter-spacing: 1.5px; font-weight: 700; }
+    .card { background: white; border-radius: 20px; padding: 24px; width: 100%; max-width: 500px; box-shadow: 0 4px 24px rgba(74,0,128,0.08); margin-bottom: 16px; border: 1px solid #f0e6ff; }
+    .domanda { font-size: 22px; font-weight: 700; color: #4a0080; margin-bottom: 20px; text-align: center; }
+    .mic-btn { width: 110px; height: 110px; border-radius: 55px; border: none; background: linear-gradient(145deg, #6a0dad, #4a0080); color: white; font-size: 42px; cursor: pointer; display: block; margin: 0 auto 12px; transition: all 0.3s; box-shadow: 0 6px 20px rgba(74,0,128,0.35); }
     .mic-btn:active { transform: scale(0.95); }
-
-    .mic-btn.recording {
-      background: linear-gradient(145deg, #e74c3c, #c0392b);
-      animation: pulse 1s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-      100% { transform: scale(1); }
-    }
-
-    .hint {
-      text-align: center;
-      color: #aaa;
-      font-size: 13px;
-      margin-bottom: 12px;
-    }
-
-    .separatore {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 12px 0;
-      color: #ccc;
-      font-size: 13px;
-    }
-
-    .separatore::before,
-    .separatore::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: #f0e6ff;
-    }
-
-    .testo-input {
-      width: 100%;
-      padding: 14px;
-      border: 2px solid #d9b3ff;
-      border-radius: 12px;
-      font-size: 16px;
-      margin-bottom: 12px;
-      outline: none;
-      transition: border 0.2s;
-    }
-
+    .mic-btn.recording { background: linear-gradient(145deg, #e74c3c, #c0392b); animation: pulse 1s infinite; }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+    .hint { text-align: center; color: #aaa; font-size: 13px; margin-bottom: 12px; }
+    .separatore { display: flex; align-items: center; gap: 10px; margin: 12px 0; color: #ccc; font-size: 13px; }
+    .separatore::before, .separatore::after { content: ''; flex: 1; height: 1px; background: #f0e6ff; }
+    .testo-input { width: 100%; padding: 14px; border: 2px solid #d9b3ff; border-radius: 12px; font-size: 16px; margin-bottom: 12px; outline: none; }
     .testo-input:focus { border-color: #4a0080; }
-
-    .trascrizione {
-      background: #f8f0ff;
-      border-radius: 12px;
-      padding: 14px;
-      min-height: 52px;
-      text-align: center;
-      color: #333;
-      font-size: 18px;
-      margin-bottom: 16px;
-      border: 2px solid #e8d5ff;
-      display: none;
-    }
-
-    .feedback {
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 16px;
-      font-size: 14px;
-      display: none;
-      line-height: 1.5;
-    }
-
+    .trascrizione { background: #f8f0ff; border-radius: 12px; padding: 14px; min-height: 52px; text-align: center; color: #333; font-size: 18px; margin-bottom: 16px; border: 2px solid #e8d5ff; display: none; }
+    .feedback { border-radius: 12px; padding: 14px; margin-bottom: 16px; font-size: 14px; display: none; line-height: 1.5; }
     .feedback.ok { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
     .feedback.no { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
-
-    .btn {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-bottom: 10px;
-      transition: all 0.2s;
-    }
-
+    .btn { width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 10px; transition: all 0.2s; }
     .btn:active { transform: scale(0.98); }
     .btn-primary { background: linear-gradient(135deg, #6a0dad, #4a0080); color: white; box-shadow: 0 4px 12px rgba(74,0,128,0.3); }
     .btn-secondary { background: #f0e6ff; color: #4a0080; }
     .btn-success { background: linear-gradient(135deg, #43a047, #2e7d32); color: white; }
     .btn-danger { background: linear-gradient(135deg, #e53935, #c0392b); color: white; }
-    .btn-cerca { background: linear-gradient(135deg, #6a0dad, #4a0080); color: white; box-shadow: 0 4px 12px rgba(74,0,128,0.3); }
-
-    .sessione-input {
-      width: 100%;
-      padding: 14px;
-      border: 2px solid #d9b3ff;
-      border-radius: 12px;
-      font-size: 16px;
-      margin-bottom: 16px;
-      outline: none;
-    }
-
+    .sessione-input { width: 100%; padding: 14px; border: 2px solid #d9b3ff; border-radius: 12px; font-size: 16px; margin-bottom: 16px; outline: none; }
     .sessione-input:focus { border-color: #4a0080; }
-
     .lista-ordini { width: 100%; max-width: 500px; }
-
-    .ordine-item {
-      background: white;
-      border-radius: 14px;
-      padding: 14px 18px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 10px rgba(74,0,128,0.08);
-      border-left: 4px solid #6a0dad;
-    }
-
+    .ordine-item { background: white; border-radius: 14px; padding: 14px 18px; margin-bottom: 10px; box-shadow: 0 2px 10px rgba(74,0,128,0.08); border-left: 4px solid #6a0dad; }
     .ordine-produttore { color: #4a0080; font-weight: 700; font-size: 15px; }
     .ordine-dettagli { color: #555; font-size: 13px; margin-top: 4px; }
     .ordine-totale { color: #2e7d32; font-weight: 700; font-size: 15px; margin-top: 6px; }
-
-    .sezione-title {
-      color: #4a0080;
-      font-weight: 700;
-      font-size: 15px;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid #f0e6ff;
-    }
-
-    .totale-sessione {
-      text-align: right;
-      font-weight: 700;
-      color: #4a0080;
-      padding-top: 10px;
-      font-size: 16px;
-      border-top: 2px solid #f0e6ff;
-      margin-top: 8px;
-    }
-
-    .status-msg {
-      text-align: center;
-      padding: 12px;
-      border-radius: 10px;
-      font-weight: 700;
-      display: none;
-      margin-bottom: 12px;
-    }
-
+    .sezione-title { color: #4a0080; font-weight: 700; font-size: 15px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #f0e6ff; }
+    .totale-sessione { text-align: right; font-weight: 700; color: #4a0080; padding-top: 10px; font-size: 16px; border-top: 2px solid #f0e6ff; margin-top: 8px; }
+    .status-msg { text-align: center; padding: 12px; border-radius: 10px; font-weight: 700; display: none; margin-bottom: 12px; }
     .status-msg.ok { background: #e8f5e9; color: #2e7d32; }
     .status-msg.no { background: #ffebee; color: #c62828; }
-
-    .loader {
-      text-align: center;
-      color: #4a0080;
-      font-size: 14px;
-      padding: 10px;
-      display: none;
-    }
-
+    .loader { text-align: center; color: #4a0080; font-size: 14px; padding: 10px; display: none; }
     .divider { height: 1px; background: #f0e6ff; margin: 4px 0 14px; }
   </style>
 </head>
@@ -251,7 +63,6 @@
   <div class="header-bar">📦 REGISTRAZIONE ORDINE REALE</div>
 </div>
 
-<!-- STEP 0: Nome sessione -->
 <div class="card" id="card-sessione">
   <div class="domanda">📝 Nome sessione</div>
   <p class="hint">Es. "Kabaj 15 apr" oppure "Giro Slovenia aprile"</p>
@@ -259,22 +70,14 @@
   <button class="btn btn-primary" onclick="iniziaSessione()">▶ Inizia registrazione</button>
 </div>
 
-<!-- STEP 1-3: Domande -->
 <div class="card" id="card-vino" style="display:none;">
   <div class="domanda" id="testo-domanda">🍷 Qual è il vino?</div>
-
-  <!-- Microfono -->
   <button class="mic-btn" id="mic-btn" onclick="toggleRec()">🎙️</button>
   <p class="hint" id="hint-mic">Premi e parla</p>
   <div class="trascrizione" id="trascrizione">—</div>
-
-  <!-- Separatore -->
   <div class="separatore">oppure scrivi</div>
-
-  <!-- Input testo -->
-  <input type="text" class="testo-input" id="testo-manuale" placeholder="Scrivi qui...">
-  <button class="btn btn-cerca" id="btn-cerca" onclick="cercaTesto()">🔍 Cerca</button>
-
+  <input type="text" class="testo-input" id="testo-manuale" placeholder="Scrivi il nome del vino...">
+  <button class="btn btn-primary" id="btn-cerca" onclick="cercaTesto()">🔍 Cerca</button>
   <div class="feedback ok" id="feedback-ok"></div>
   <div class="feedback no" id="feedback-no"></div>
   <div class="loader" id="loader">🔍 Sto cercando...</div>
@@ -283,10 +86,8 @@
   <button class="btn btn-secondary" id="btn-riprova" onclick="riprova()" style="display:none;">🔄 Riprova</button>
 </div>
 
-<!-- Lista ordini -->
 <div class="lista-ordini" id="lista-ordini"></div>
 
-<!-- STEP finale -->
 <div class="card" id="card-fine" style="display:none;">
   <div class="sezione-title">Cosa vuoi fare?</div>
   <button class="btn btn-success" onclick="salvaEFinisci()">💾 Salva tutto in Sheets</button>
@@ -298,14 +99,8 @@
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzw4P2lLuFELMB3EToaN5gvCQSd-2jlfn5Gg7ud2hf022AqrH4ZcksV4NvO46uRVOW-/exec";
 
-  let step = 'vino';
-  let vinoCorrente = null;
-  let bottiglia = 0;
-  let prezzo = 0;
-  let ordini = [];
-  let sessione = '';
-  let recognition = null;
-  let recording = false;
+  let step = 'vino', vinoCorrente = null, bottiglia = 0, prezzo = 0;
+  let ordini = [], sessione = '', recognition = null, recording = false;
 
   function iniziaSessione() {
     sessione = document.getElementById('nomeSessione').value.trim();
@@ -316,10 +111,7 @@
   }
 
   function nuovaDomanda() {
-    step = 'vino';
-    vinoCorrente = null;
-    bottiglia = 0;
-    prezzo = 0;
+    step = 'vino'; vinoCorrente = null; bottiglia = 0; prezzo = 0;
     document.getElementById('testo-domanda').textContent = '🍷 Qual è il vino?';
     document.getElementById('hint-mic').textContent = 'Premi e parla';
     document.getElementById('testo-manuale').placeholder = 'Scrivi il nome del vino...';
@@ -341,17 +133,11 @@
     document.getElementById('loader').style.display = 'none';
   }
 
-  // ---- MICROFONO ----
-  function toggleRec() {
-    if (recording) { stopRec(); } else { startRec(); }
-  }
+  function toggleRec() { if (recording) { stopRec(); } else { startRec(); } }
 
   function startRec() {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) {
-      mostraStatus('Microfono non supportato — usa il campo testo!', 'no');
-      return;
-    }
+    if (!SR) { mostraStatus('Microfono non supportato — usa il campo testo!', 'no'); return; }
     recognition = new SR();
     recognition.lang = 'it-IT';
     recognition.continuous = false;
@@ -362,10 +148,7 @@
       document.getElementById('trascrizione').textContent = testo;
       elaboraTesto(testo);
     };
-    recognition.onerror = () => {
-      stopRec();
-      mostraStatus('Errore microfono — usa il campo testo!', 'no');
-    };
+    recognition.onerror = () => { stopRec(); mostraStatus('Errore microfono — usa il campo testo!', 'no'); };
     recognition.onend = () => stopRec();
     recognition.start();
     recording = true;
@@ -382,7 +165,6 @@
     document.getElementById('hint-mic').textContent = 'Premi e parla';
   }
 
-  // ---- INPUT TESTO ----
   function cercaTesto() {
     const testo = document.getElementById('testo-manuale').value.trim();
     if (!testo) { alert('Scrivi qualcosa!'); return; }
@@ -391,14 +173,12 @@
     elaboraTesto(testo);
   }
 
-  // Permetti invio con Enter nel campo testo
   document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('testo-manuale').addEventListener('keypress', e => {
       if (e.key === 'Enter') cercaTesto();
     });
   });
 
-  // ---- ELABORAZIONE ----
   function elaboraTesto(testo) {
     if (step === 'vino') {
       document.getElementById('loader').style.display = 'block';
@@ -449,21 +229,12 @@
 
   function mostraStatus(msg, tipo) {
     const s = document.getElementById('status-msg');
-    s.textContent = msg;
-    s.className = 'status-msg ' + tipo;
-    s.style.display = 'block';
+    s.textContent = msg; s.className = 'status-msg ' + tipo; s.style.display = 'block';
     setTimeout(() => s.style.display = 'none', 3000);
   }
 
   function estraiNumero(testo) {
-    const parole = {
-      'uno':1,'una':1,'due':2,'tre':3,'quattro':4,'cinque':5,
-      'sei':6,'sette':7,'otto':8,'nove':9,'dieci':10,
-      'undici':11,'dodici':12,'tredici':13,'quattordici':14,'quindici':15,
-      'sedici':16,'diciassette':17,'diciotto':18,'diciannove':19,'venti':20,
-      'venticinque':25,'trenta':30,'quaranta':40,'cinquanta':50,
-      'sessanta':60,'settanta':70,'ottanta':80,'novanta':90,'cento':100
-    };
+    const parole = {'uno':1,'una':1,'due':2,'tre':3,'quattro':4,'cinque':5,'sei':6,'sette':7,'otto':8,'nove':9,'dieci':10,'undici':11,'dodici':12,'tredici':13,'quattordici':14,'quindici':15,'sedici':16,'diciassette':17,'diciotto':18,'diciannove':19,'venti':20,'venticinque':25,'trenta':30,'quaranta':40,'cinquanta':50,'sessanta':60,'settanta':70,'ottanta':80,'novanta':90,'cento':100};
     const lower = testo.toLowerCase();
     for (const [k,v] of Object.entries(parole)) { if (lower.includes(k)) return v; }
     const m = testo.match(/\d+([.,]\d+)?/);
@@ -475,51 +246,37 @@
     if (step === 'vino') {
       step = 'bottiglie';
       document.getElementById('testo-domanda').textContent = '📦 Quante bottiglie?';
-      document.getElementById('hint-mic').textContent = 'Premi e parla';
       document.getElementById('testo-manuale').placeholder = 'Scrivi il numero...';
       document.getElementById('btn-cerca').style.display = 'block';
       reset();
     } else if (step === 'bottiglie') {
       step = 'prezzo';
       document.getElementById('testo-domanda').textContent = '💶 Prezzo pagato per bottiglia?';
-      document.getElementById('hint-mic').textContent = 'Premi e parla';
       document.getElementById('testo-manuale').placeholder = 'Scrivi il prezzo in euro...';
       document.getElementById('btn-cerca').style.display = 'block';
       reset();
     } else if (step === 'prezzo') {
-      ordini.push({
-        sessione: sessione,
-        nomeCompleto: vinoCorrente.nomeCompleto,
-        produttore: vinoCorrente.produttore,
-        bottiglie: bottiglia,
-        prezzo: prezzo
-      });
+      ordini.push({ sessione: sessione, nomeCompleto: vinoCorrente.nomeCompleto, produttore: vinoCorrente.produttore, bottiglie: bottiglia, prezzo: prezzo });
       document.getElementById('card-vino').style.display = 'none';
       document.getElementById('card-fine').style.display = 'block';
       aggiornaLista();
     }
   }
 
-  function riprova() {
-    reset();
-    document.getElementById('btn-cerca').style.display = 'block';
-  }
+  function riprova() { reset(); document.getElementById('btn-cerca').style.display = 'block'; }
 
   function aggiornaLista() {
     const lista = document.getElementById('lista-ordini');
     if (ordini.length === 0) { lista.innerHTML = ''; return; }
-    let totSessione = ordini.reduce((s,o) => s + o.bottiglie * o.prezzo, 0);
+    let tot = ordini.reduce((s,o) => s + o.bottiglie * o.prezzo, 0);
     let html = '<div class="card"><div class="sezione-title">🧾 Ordini questa sessione</div>';
     ordini.forEach(o => {
-      const nomeCorto = o.nomeCompleto.split('|')[1]?.trim() || o.nomeCompleto;
-      html += '<div class="ordine-item">';
-      html += '<div class="ordine-produttore">' + o.produttore + '</div>';
-      html += '<div class="ordine-dettagli">' + nomeCorto + ' — ' + o.bottiglie + ' bott. × €' + o.prezzo + '</div>';
-      html += '<div class="ordine-totale">€' + (o.bottiglie * o.prezzo) + '</div>';
-      html += '</div>';
+      const nc = o.nomeCompleto.split('|')[1]?.trim() || o.nomeCompleto;
+      html += '<div class="ordine-item"><div class="ordine-produttore">' + o.produttore + '</div>';
+      html += '<div class="ordine-dettagli">' + nc + ' — ' + o.bottiglie + ' bott. × €' + o.prezzo + '</div>';
+      html += '<div class="ordine-totale">€' + (o.bottiglie * o.prezzo) + '</div></div>';
     });
-    html += '<div class="totale-sessione">Totale sessione: €' + totSessione + '</div>';
-    html += '</div>';
+    html += '<div class="totale-sessione">Totale sessione: €' + tot + '</div></div>';
     lista.innerHTML = html;
   }
 
@@ -531,28 +288,23 @@
 
   function salvaEFinisci() {
     mostraStatus('💾 Salvataggio in corso...', 'ok');
-    fetch(SCRIPT_URL + '?action=salvaOrdini', {
-      method: 'POST',
-      body: JSON.stringify(ordini)
-    })
-    .then(r => r.json())
-    .then(() => {
-      mostraStatus('✅ Salvato in Sheets!', 'ok');
-      setTimeout(() => {
-        ordini = [];
-        aggiornaLista();
-        document.getElementById('card-fine').style.display = 'none';
-        document.getElementById('card-sessione').style.display = 'block';
-        document.getElementById('nomeSessione').value = '';
-      }, 2000);
-    })
-    .catch(() => mostraStatus('❌ Errore salvataggio — riprova!', 'no'));
+    fetch(SCRIPT_URL + '?action=salvaOrdini&data=' + encodeURIComponent(JSON.stringify(ordini)))
+      .then(r => r.json())
+      .then(() => {
+        mostraStatus('✅ Salvato in Sheets!', 'ok');
+        setTimeout(() => {
+          ordini = []; aggiornaLista();
+          document.getElementById('card-fine').style.display = 'none';
+          document.getElementById('card-sessione').style.display = 'block';
+          document.getElementById('nomeSessione').value = '';
+        }, 2000);
+      })
+      .catch(() => mostraStatus('❌ Errore salvataggio — riprova!', 'no'));
   }
 
   function annullaEsci() {
     if (confirm('Sicuro? Perderai tutto!')) {
-      ordini = [];
-      aggiornaLista();
+      ordini = []; aggiornaLista();
       document.getElementById('card-fine').style.display = 'none';
       document.getElementById('card-vino').style.display = 'none';
       document.getElementById('card-sessione').style.display = 'block';
