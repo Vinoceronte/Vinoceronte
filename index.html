@@ -11,50 +11,33 @@
     .header-top { background: #fdf6f0; padding: 22px 20px; text-align: center; font-size: 30px; font-weight: 900; color: #111; }
     .header-top span { color: #c0392b; }
     .header-bar { background: #4a0080; color: white; text-align: center; padding: 11px; font-size: 13px; letter-spacing: 1.5px; font-weight: 700; }
-    .card { background: white; border-radius: 20px; padding: 24px; width: 100%; max-width: 500px; box-shadow: 0 4px 24px rgba(74,0,128,0.08); margin-bottom: 16px; border: 1px solid #f0e6ff; }
-    .domanda { font-size: 22px; font-weight: 700; color: #4a0080; margin-bottom: 16px; text-align: center; }
-    .hint { text-align: center; color: #aaa; font-size: 13px; margin-bottom: 12px; }
-    .hint strong { color: #4a0080; }
-    .testo-input { width: 100%; padding: 14px; border: 2px solid #d9b3ff; border-radius: 12px; font-size: 16px; margin-bottom: 12px; outline: none; transition: border 0.2s; }
-    .testo-input:focus { border-color: #4a0080; }
-    .numero-input { width: 100%; padding: 14px; border: 2px solid #d9b3ff; border-radius: 12px; font-size: 20px; text-align: center; margin-bottom: 12px; outline: none; transition: border 0.2s; -moz-appearance: textfield; }
-    .numero-input:focus { border-color: #4a0080; }
-    .numero-input::-webkit-outer-spin-button,
-    .numero-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-    .prezzo-wrapper { position: relative; margin-bottom: 12px; }
-    .prezzo-wrapper .euro { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 20px; font-weight: 700; color: #4a0080; pointer-events: none; }
-    .prezzo-wrapper .numero-input { padding-left: 36px; margin-bottom: 0; }
-    .feedback { border-radius: 12px; padding: 14px; margin-bottom: 16px; font-size: 14px; display: none; line-height: 1.5; }
-    .feedback.no { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
-    .btn { width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 10px; transition: all 0.2s; }
+    .card { background: white; border-radius: 20px; padding: 28px; width: 100%; max-width: 500px; box-shadow: 0 4px 24px rgba(74,0,128,0.08); margin-bottom: 16px; border: 1px solid #f0e6ff; }
+    .domanda { font-size: 20px; font-weight: 700; color: #4a0080; margin-bottom: 8px; }
+    .hint { color: #aaa; font-size: 13px; margin-bottom: 14px; }
+    .input-field { width: 100%; padding: 14px; border: 2px solid #d9b3ff; border-radius: 12px; font-size: 16px; margin-bottom: 20px; outline: none; transition: border 0.2s; }
+    .input-field:focus { border-color: #4a0080; }
+    .prezzo-wrapper { position: relative; margin-bottom: 20px; }
+    .prezzo-wrapper .euro { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 18px; font-weight: 700; color: #4a0080; pointer-events: none; }
+    .prezzo-wrapper .input-field { padding-left: 36px; margin-bottom: 0; -moz-appearance: textfield; }
+    .prezzo-wrapper .input-field::-webkit-outer-spin-button,
+    .prezzo-wrapper .input-field::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .btn { width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
     .btn:active { transform: scale(0.98); }
     .btn-primary { background: linear-gradient(135deg, #6a0dad, #4a0080); color: white; box-shadow: 0 4px 12px rgba(74,0,128,0.3); }
-    .btn-secondary { background: #f0e6ff; color: #4a0080; }
-    .btn-success { background: linear-gradient(135deg, #43a047, #2e7d32); color: white; }
-    .btn-danger { background: linear-gradient(135deg, #e53935, #c0392b); color: white; }
-    .sessione-input { width: 100%; padding: 14px; border: 2px solid #d9b3ff; border-radius: 12px; font-size: 16px; margin-bottom: 16px; outline: none; }
-    .produttore-badge { background: #4a0080; color: white; border-radius: 8px; padding: 6px 12px; font-size: 13px; font-weight: 700; display: inline-block; margin-bottom: 14px; }
-    .lista-vini { margin-bottom: 12px; }
-    .vino-option { background: #f8f0ff; border: 2px solid #e8d5ff; border-radius: 12px; padding: 12px 16px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; font-size: 13px; line-height: 1.5; }
-    .vino-option:hover, .vino-option:active { background: #4a0080; color: white; border-color: #4a0080; }
-    .vino-trovato { background: #e8f5e9; border: 2px solid #a5d6a7; border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; display: none; }
-    .vino-trovato .label { font-size: 12px; color: #2e7d32; font-weight: 700; margin-bottom: 6px; }
-    .vino-trovato .produttore { font-weight: 700; color: #2e7d32; font-size: 14px; }
-    .vino-trovato .nome { color: #333; font-size: 13px; margin-top: 4px; line-height: 1.4; }
-    .lista-ordini { width: 100%; max-width: 500px; }
-    .ordine-item { background: white; border-radius: 14px; padding: 14px 18px; margin-bottom: 10px; box-shadow: 0 2px 10px rgba(74,0,128,0.08); border-left: 4px solid #6a0dad; }
-    .ordine-produttore { color: #4a0080; font-weight: 700; font-size: 15px; }
-    .ordine-dettagli { color: #555; font-size: 12px; margin-top: 4px; line-height: 1.4; }
-    .ordine-totale { color: #2e7d32; font-weight: 700; font-size: 15px; margin-top: 6px; }
-    .sezione-title { color: #4a0080; font-weight: 700; font-size: 15px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #f0e6ff; }
-    .totale-sessione { text-align: right; font-weight: 700; color: #4a0080; padding-top: 10px; font-size: 16px; border-top: 2px solid #f0e6ff; margin-top: 8px; }
-    .status-msg { text-align: center; padding: 12px; border-radius: 10px; font-weight: 700; display: none; margin-bottom: 12px; }
+    .btn-secondary { background: #f0e6ff; color: #4a0080; margin-top: 10px; }
+    .feedback { border-radius: 12px; padding: 14px; margin-top: 14px; font-size: 14px; display: none; }
+    .feedback.no { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+    .riepilogo { background: #f8f0ff; border-radius: 14px; padding: 18px; margin-bottom: 20px; border: 2px solid #e8d5ff; }
+    .riepilogo .cantina-label { font-size: 12px; color: #6a0dad; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .riepilogo .cantina-nome { font-size: 22px; font-weight: 900; color: #4a0080; margin-bottom: 12px; }
+    .riepilogo .totale-label { font-size: 12px; color: #6a0dad; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .riepilogo .totale-valore { font-size: 36px; font-weight: 900; color: #2e7d32; }
+    .btn-success { background: linear-gradient(135deg, #43a047, #2e7d32); color: white; box-shadow: 0 4px 12px rgba(46,125,50,0.3); }
+    .btn-danger { background: linear-gradient(135deg, #e53935, #c0392b); color: white; margin-top: 10px; }
+    .status-msg { text-align: center; padding: 14px; border-radius: 12px; font-weight: 700; display: none; margin-top: 14px; font-size: 15px; }
     .status-msg.ok { background: #e8f5e9; color: #2e7d32; }
     .status-msg.no { background: #ffebee; color: #c62828; }
-    .loader { text-align: center; color: #4a0080; font-size: 14px; padding: 10px; display: none; }
-    .divider { height: 1px; background: #f0e6ff; margin: 4px 0 14px; }
-    .info-box { background: #f0e6ff; border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; font-size: 13px; color: #333; line-height: 1.5; }
-    .info-box .label { font-weight: 700; color: #4a0080; font-size: 14px; display: block; margin-bottom: 2px; }
+    .divider { height: 1px; background: #f0e6ff; margin: 12px 0; }
   </style>
 </head>
 <body>
@@ -64,81 +47,40 @@
   <div class="header-bar">📦 REGISTRAZIONE ORDINE REALE</div>
 </div>
 
-<!-- STEP 0: Nome sessione -->
-<div class="card" id="card-sessione">
-  <div class="domanda">📝 Nome sessione</div>
-  <p class="hint">Es. "Kabaj 15 apr" oppure "Giro Slovenia aprile"</p>
-  <input type="text" class="sessione-input" id="nomeSessione" placeholder="Nome della visita in cantina...">
-  <button class="btn btn-primary" onclick="iniziaSessione()">Inizia</button>
-</div>
+<!-- STEP 1: Inserimento -->
+<div class="card" id="card-input">
+  <div class="domanda">🏭 Cantina visitata</div>
+  <p class="hint">Es. Kabaj, Movia, Štekar Kmetija...</p>
+  <input type="text" class="input-field" id="input-cantina" placeholder="Nome cantina...">
 
-<!-- STEP 1: Produttore -->
-<div class="card" id="card-produttore" style="display:none;">
-  <div class="domanda">🏭 Produttore</div>
-  <p class="hint">Scrivi il nome del produttore</p>
-  <input type="text" class="testo-input" id="input-produttore" placeholder="Es. Kabaj, Movia, Pulec...">
-  <button class="btn btn-primary" onclick="confermaProduttore()">Avanti →</button>
-  <div class="feedback no" id="feedback-produttore-no"></div>
-</div>
-
-<!-- STEP 2: Cerca vino -->
-<div class="card" id="card-vino" style="display:none;">
-  <div class="domanda">🍷 Qual è il vino?</div>
-  <div id="produttore-badge-container"></div>
-  <p class="hint">Scrivi il nome oppure <strong>%</strong> per vedere tutti i vini</p>
-  <input type="text" class="testo-input" id="input-vino" placeholder="Es. Ravan, Sivi Pinot, o %">
-  <button class="btn btn-primary" id="btn-cerca" onclick="cercaVino()">🔍 Cerca</button>
-  <div class="loader" id="loader-vino">🔍 Sto cercando...</div>
-  <div class="feedback no" id="feedback-vino-no"></div>
-  <div class="vino-trovato" id="vino-trovato-singolo">
-    <div class="label">✅ Trovato — è questo?</div>
-    <div class="produttore" id="vino-singolo-produttore"></div>
-    <div class="nome" id="vino-singolo-nome"></div>
-  </div>
-  <button class="btn btn-success" id="btn-conferma-singolo" onclick="confermaSingolo()" style="display:none;">✅ Sì, è questo!</button>
-  <button class="btn btn-secondary" id="btn-riprova-singolo" onclick="riprovaCerca()" style="display:none;">🔄 Cerca di nuovo</button>
-  <div class="lista-vini" id="lista-vini"></div>
-  <button class="btn btn-secondary" id="btn-cambia-produttore" onclick="cambiaProduttore()" style="display:none;margin-top:8px;">← Cambia produttore</button>
-</div>
-
-<!-- STEP 3: Bottiglie -->
-<div class="card" id="card-bottiglie" style="display:none;">
-  <div class="domanda">📦 Quante bottiglie?</div>
-  <div class="info-box" id="info-bt"></div>
-  <input type="number" class="numero-input" id="input-bottiglie" placeholder="Es. 3" min="1">
-  <button class="btn btn-primary" onclick="confermaBottiglie()">✅ Conferma</button>
-  <div class="feedback no" id="feedback-bottiglie-no"></div>
-</div>
-
-<!-- STEP 4: Prezzo -->
-<div class="card" id="card-prezzo" style="display:none;">
-  <div class="domanda">💶 Prezzo per bottiglia?</div>
-  <div class="info-box" id="info-pr"></div>
+  <div class="domanda">💶 Totale speso</div>
+  <p class="hint">Inserisci il totale complessivo dell'ordine</p>
   <div class="prezzo-wrapper">
     <span class="euro">€</span>
-    <input type="number" class="numero-input" id="input-prezzo" placeholder="Es. 18" min="0" step="0.5">
+    <input type="number" class="input-field" id="input-totale" placeholder="Es. 320" min="0" step="0.5">
   </div>
-  <button class="btn btn-primary" onclick="confermaPrezzo()">✅ Conferma</button>
-  <div class="feedback no" id="feedback-prezzo-no"></div>
+
+  <button class="btn btn-primary" onclick="mostraRiepilogo()">Riepilogo →</button>
+  <div class="feedback no" id="feedback-input"></div>
 </div>
 
-<!-- Lista ordini -->
-<div class="lista-ordini" id="lista-ordini"></div>
-
-<!-- STEP finale -->
-<div class="card" id="card-fine" style="display:none;">
-  <div class="sezione-title">Cosa vuoi fare?</div>
-  <button class="btn btn-success" onclick="salvaEFinisci()">💾 Salva tutto in Sheets</button>
+<!-- STEP 2: Riepilogo e conferma -->
+<div class="card" id="card-riepilogo" style="display:none;">
+  <div class="riepilogo">
+    <div class="cantina-label">Cantina</div>
+    <div class="cantina-nome" id="riepilogo-cantina"></div>
+    <div class="totale-label">Totale speso</div>
+    <div class="totale-valore" id="riepilogo-totale"></div>
+  </div>
+  <button class="btn btn-success" onclick="salva()">💾 Salva in Sheets</button>
   <div class="divider"></div>
-  <button class="btn btn-secondary" onclick="aggiungiAltro()">➕ Aggiungi altro vino</button>
-  <button class="btn btn-danger" onclick="annullaEsci()">❌ Annulla tutto</button>
-  <div class="status-msg" id="status-fine"></div>
+  <button class="btn btn-secondary" onclick="modifica()">✏️ Modifica</button>
+  <button class="btn btn-danger" onclick="annulla()">❌ Annulla</button>
+  <div class="status-msg" id="status-riepilogo"></div>
 </div>
 
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzw4P2lLuFELMB3EToaN5gvCQSd-2jlfn5Gg7ud2hf022AqrH4ZcksV4NvO46uRVOW-/exec";
-
-  let ordini = [], sessione = '', produttoreCorrente = '', vinoCorrente = null;
   let cbCounter = 0;
 
   function jsonpCall(url, callback) {
@@ -156,240 +98,75 @@
     document.head.appendChild(script);
   }
 
-  function mostraStatus(id, msg, tipo) {
-    const s = document.getElementById(id);
-    s.textContent = msg; s.className = 'status-msg ' + tipo; s.style.display = 'block';
-    setTimeout(() => s.style.display = 'none', 3000);
-  }
+  function mostraRiepilogo() {
+    const cantina = document.getElementById('input-cantina').value.trim();
+    const totaleVal = document.getElementById('input-totale').value.trim();
+    const totale = parseFloat(totaleVal.replace(',', '.'));
 
-  function resetCardVino() {
-    document.getElementById('input-vino').value = '';
-    document.getElementById('lista-vini').innerHTML = '';
-    document.getElementById('feedback-vino-no').style.display = 'none';
-    document.getElementById('vino-trovato-singolo').style.display = 'none';
-    document.getElementById('btn-conferma-singolo').style.display = 'none';
-    document.getElementById('btn-riprova-singolo').style.display = 'none';
-    document.getElementById('btn-cerca').style.display = 'block';
-    document.getElementById('loader-vino').style.display = 'none';
-    document.getElementById('btn-cambia-produttore').style.display = 'block';
-  }
-
-  // ---- SESSIONE ----
-  function iniziaSessione() {
-    sessione = document.getElementById('nomeSessione').value.trim();
-    if (!sessione) { alert('Inserisci un nome per la sessione!'); return; }
-    ordini = []; vinoCorrente = null; produttoreCorrente = '';
-    aggiornaLista();
-    document.getElementById('card-sessione').style.display = 'none';
-    document.getElementById('card-produttore').style.display = 'block';
-    document.getElementById('input-produttore').value = '';
-    document.getElementById('feedback-produttore-no').style.display = 'none';
-    document.getElementById('input-produttore').focus();
-  }
-
-  // ---- PRODUTTORE ----
-  function confermaProduttore() {
-    const val = document.getElementById('input-produttore').value.trim();
-    if (!val) {
-      document.getElementById('feedback-produttore-no').textContent = '❌ Inserisci il nome del produttore';
-      document.getElementById('feedback-produttore-no').style.display = 'block';
+    if (!cantina) {
+      document.getElementById('feedback-input').textContent = '❌ Inserisci il nome della cantina';
+      document.getElementById('feedback-input').style.display = 'block';
       return;
     }
-    produttoreCorrente = val;
-    document.getElementById('card-produttore').style.display = 'none';
-    document.getElementById('card-vino').style.display = 'block';
-    document.getElementById('produttore-badge-container').innerHTML = '<div class="produttore-badge">🏭 ' + produttoreCorrente + '</div>';
-    document.getElementById('btn-cambia-produttore').style.display = 'block';
-    resetCardVino();
-    document.getElementById('input-vino').focus();
-  }
-
-  function cambiaProduttore() {
-    document.getElementById('card-vino').style.display = 'none';
-    document.getElementById('card-produttore').style.display = 'block';
-    document.getElementById('input-produttore').focus();
-  }
-
-  // ---- CERCA VINO ----
-  function cercaVino() {
-    const testo = document.getElementById('input-vino').value.trim();
-    if (!testo) { alert('Scrivi il nome del vino o %'); return; }
-
-    document.getElementById('loader-vino').style.display = 'block';
-    document.getElementById('btn-cerca').style.display = 'none';
-    document.getElementById('lista-vini').innerHTML = '';
-    document.getElementById('feedback-vino-no').style.display = 'none';
-    document.getElementById('vino-trovato-singolo').style.display = 'none';
-    document.getElementById('btn-conferma-singolo').style.display = 'none';
-    document.getElementById('btn-riprova-singolo').style.display = 'none';
-
-    const url = SCRIPT_URL + '?action=cercaVino&query=' + encodeURIComponent(testo) + '&produttore=' + encodeURIComponent(produttoreCorrente);
-
-    jsonpCall(url, function(r) {
-      document.getElementById('loader-vino').style.display = 'none';
-      document.getElementById('btn-cerca').style.display = 'block';
-
-      if (!r) {
-        document.getElementById('feedback-vino-no').textContent = '❌ Errore di connessione — riprova';
-        document.getElementById('feedback-vino-no').style.display = 'block';
-        return;
-      }
-
-      if (!r.trovato) {
-        document.getElementById('feedback-vino-no').textContent = '❌ Nessun vino trovato — prova con % per vedere tutti';
-        document.getElementById('feedback-vino-no').style.display = 'block';
-        return;
-      }
-
-      if (r.singolo) {
-        vinoCorrente = { nomeCompleto: r.nomeCompleto, produttore: r.produttore };
-        document.getElementById('vino-singolo-produttore').textContent = r.produttore;
-        document.getElementById('vino-singolo-nome').textContent = r.nomeCompleto;
-        document.getElementById('vino-trovato-singolo').style.display = 'block';
-        document.getElementById('btn-conferma-singolo').style.display = 'block';
-        document.getElementById('btn-riprova-singolo').style.display = 'block';
-        document.getElementById('btn-cerca').style.display = 'none';
-        document.getElementById('btn-cambia-produttore').style.display = 'none';
-      } else {
-        mostraListaVini(r.risultati);
-      }
-    });
-  }
-
-  function confermaSingolo() { vai_a_bottiglie(); }
-
-  function riprovaCerca() {
-    resetCardVino();
-    document.getElementById('input-vino').focus();
-  }
-
-  function mostraListaVini(risultati) {
-    let html = '<p style="color:#4a0080;font-weight:700;font-size:14px;margin-bottom:10px;">Seleziona il vino:</p>';
-    risultati.forEach(function(v) {
-      html += '<div class="vino-option" onclick=\'selezionaVino("' + v.nomeCompleto.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/'/g, "\\'") + '","' + v.produttore.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/'/g, "\\'") + '")\'>';
-      html += v.nomeCompleto;
-      html += '</div>';
-    });
-    document.getElementById('lista-vini').innerHTML = html;
-  }
-
-  function selezionaVino(nomeCompleto, produttore) {
-    vinoCorrente = { nomeCompleto: nomeCompleto, produttore: produttore };
-    vai_a_bottiglie();
-  }
-
-  function vai_a_bottiglie() {
-    document.getElementById('card-vino').style.display = 'none';
-    document.getElementById('card-bottiglie').style.display = 'block';
-    document.getElementById('info-bt').innerHTML = '<span class="label">' + vinoCorrente.produttore + '</span>' + vinoCorrente.nomeCompleto;
-    document.getElementById('input-bottiglie').value = '';
-    document.getElementById('feedback-bottiglie-no').style.display = 'none';
-    document.getElementById('input-bottiglie').focus();
-  }
-
-  // ---- BOTTIGLIE ----
-  function confermaBottiglie() {
-    const val = document.getElementById('input-bottiglie').value.trim();
-    const n = parseInt(val);
-    if (!val || isNaN(n) || n <= 0) {
-      document.getElementById('feedback-bottiglie-no').textContent = '❌ Inserisci un numero valido';
-      document.getElementById('feedback-bottiglie-no').style.display = 'block';
+    if (!totaleVal || isNaN(totale) || totale <= 0) {
+      document.getElementById('feedback-input').textContent = '❌ Inserisci un totale valido';
+      document.getElementById('feedback-input').style.display = 'block';
       return;
     }
-    vinoCorrente.bottiglie = n;
-    document.getElementById('card-bottiglie').style.display = 'none';
-    document.getElementById('card-prezzo').style.display = 'block';
-    document.getElementById('info-pr').innerHTML = '<span class="label">' + vinoCorrente.produttore + '</span>' + vinoCorrente.nomeCompleto + '<br><strong style="color:#4a0080">' + n + ' bottiglie</strong>';
-    document.getElementById('input-prezzo').value = '';
-    document.getElementById('feedback-prezzo-no').style.display = 'none';
-    document.getElementById('input-prezzo').focus();
+
+    document.getElementById('feedback-input').style.display = 'none';
+    document.getElementById('riepilogo-cantina').textContent = cantina;
+    document.getElementById('riepilogo-totale').textContent = '€ ' + totale.toFixed(2);
+    document.getElementById('card-input').style.display = 'none';
+    document.getElementById('card-riepilogo').style.display = 'block';
   }
 
-  // ---- PREZZO ----
-  function confermaPrezzo() {
-    const val = document.getElementById('input-prezzo').value.trim();
-    const n = parseFloat(val.replace(',', '.'));
-    if (!val || isNaN(n) || n <= 0) {
-      document.getElementById('feedback-prezzo-no').textContent = '❌ Inserisci un prezzo valido';
-      document.getElementById('feedback-prezzo-no').style.display = 'block';
-      return;
-    }
-    vinoCorrente.prezzo = n;
-    ordini.push({
-      sessione: sessione,
-      nomeCompleto: vinoCorrente.nomeCompleto,
-      produttore: vinoCorrente.produttore,
-      bottiglie: vinoCorrente.bottiglie,
-      prezzo: vinoCorrente.prezzo
-    });
-    aggiornaLista();
-    document.getElementById('card-prezzo').style.display = 'none';
-    document.getElementById('card-fine').style.display = 'block';
+  function modifica() {
+    document.getElementById('card-riepilogo').style.display = 'none';
+    document.getElementById('card-input').style.display = 'block';
   }
 
-  // ---- LISTA ORDINI ----
-  function aggiornaLista() {
-    const lista = document.getElementById('lista-ordini');
-    if (ordini.length === 0) { lista.innerHTML = ''; return; }
-    let tot = ordini.reduce((s,o) => s + o.bottiglie * o.prezzo, 0);
-    let html = '<div class="card"><div class="sezione-title">🧾 Ordini questa sessione</div>';
-    ordini.forEach(o => {
-      html += '<div class="ordine-item">';
-      html += '<div class="ordine-produttore">' + o.produttore + '</div>';
-      html += '<div class="ordine-dettagli">' + o.nomeCompleto + '<br>' + o.bottiglie + ' bott. × €' + o.prezzo + '</div>';
-      html += '<div class="ordine-totale">€' + (o.bottiglie * o.prezzo).toFixed(2) + '</div>';
-      html += '</div>';
-    });
-    html += '<div class="totale-sessione">Totale sessione: €' + tot.toFixed(2) + '</div>';
-    html += '</div>';
-    lista.innerHTML = html;
-  }
+  function salva() {
+    const cantina = document.getElementById('input-cantina').value.trim();
+    const totale = parseFloat(document.getElementById('input-totale').value.replace(',', '.'));
 
-  // ---- NAVIGAZIONE ----
-  function aggiungiAltro() {
-    vinoCorrente = null;
-    document.getElementById('card-fine').style.display = 'none';
-    document.getElementById('card-produttore').style.display = 'block';
-    document.getElementById('input-produttore').value = '';
-    document.getElementById('feedback-produttore-no').style.display = 'none';
-    document.getElementById('input-produttore').focus();
-  }
+    const s = document.getElementById('status-riepilogo');
+    s.textContent = '💾 Salvataggio in corso...';
+    s.className = 'status-msg ok';
+    s.style.display = 'block';
 
-  function salvaEFinisci() {
-    mostraStatus('status-fine', '💾 Salvataggio in corso...', 'ok');
-    jsonpCall(SCRIPT_URL + '?action=salvaOrdini&data=' + encodeURIComponent(JSON.stringify(ordini)), function(r) {
-      if (r) {
-        mostraStatus('status-fine', '✅ Salvato in Sheets!', 'ok');
+    jsonpCall(SCRIPT_URL + '?action=salvaOrdine&cantina=' + encodeURIComponent(cantina) + '&totale=' + totale, function(r) {
+      if (r && r.result === 'ok') {
+        s.textContent = '✅ Salvato in Sheets!';
         setTimeout(() => {
-          ordini = []; aggiornaLista();
-          document.getElementById('card-fine').style.display = 'none';
-          document.getElementById('card-sessione').style.display = 'block';
-          document.getElementById('nomeSessione').value = '';
+          document.getElementById('card-riepilogo').style.display = 'none';
+          document.getElementById('card-input').style.display = 'block';
+          document.getElementById('input-cantina').value = '';
+          document.getElementById('input-totale').value = '';
+          s.style.display = 'none';
+          document.getElementById('input-cantina').focus();
         }, 2000);
       } else {
-        mostraStatus('status-fine', '❌ Errore salvataggio — riprova!', 'no');
+        s.textContent = '❌ Errore salvataggio — riprova!';
+        s.className = 'status-msg no';
       }
     });
   }
 
-  function annullaEsci() {
-    if (confirm('Sicuro? Perderai tutto!')) {
-      ordini = []; vinoCorrente = null; produttoreCorrente = '';
-      aggiornaLista();
-      ['card-fine','card-vino','card-bottiglie','card-prezzo','card-produttore'].forEach(id => {
-        document.getElementById(id).style.display = 'none';
-      });
-      document.getElementById('card-sessione').style.display = 'block';
-      document.getElementById('nomeSessione').value = '';
+  function annulla() {
+    if (confirm('Sicuro? I dati non verranno salvati.')) {
+      document.getElementById('card-riepilogo').style.display = 'none';
+      document.getElementById('card-input').style.display = 'block';
+      document.getElementById('input-cantina').value = '';
+      document.getElementById('input-totale').value = '';
+      document.getElementById('input-cantina').focus();
     }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('nomeSessione').addEventListener('keypress', e => { if (e.key === 'Enter') iniziaSessione(); });
-    document.getElementById('input-produttore').addEventListener('keypress', e => { if (e.key === 'Enter') confermaProduttore(); });
-    document.getElementById('input-vino').addEventListener('keypress', e => { if (e.key === 'Enter') cercaVino(); });
-    document.getElementById('input-bottiglie').addEventListener('keypress', e => { if (e.key === 'Enter') confermaBottiglie(); });
-    document.getElementById('input-prezzo').addEventListener('keypress', e => { if (e.key === 'Enter') confermaPrezzo(); });
+    document.getElementById('input-cantina').addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('input-totale').focus(); });
+    document.getElementById('input-totale').addEventListener('keypress', e => { if (e.key === 'Enter') mostraRiepilogo(); });
+    document.getElementById('input-cantina').focus();
   });
 </script>
 </body>
