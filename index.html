@@ -16,6 +16,8 @@
     .hint { color: #aaa; font-size: 13px; margin-bottom: 14px; }
     .input-field { width: 100%; padding: 14px; border: 2px solid #d9b3ff; border-radius: 12px; font-size: 16px; margin-bottom: 20px; outline: none; transition: border 0.2s; }
     .input-field:focus { border-color: #4a0080; }
+    .note-field { width: 100%; padding: 14px; border: 2px solid #d9b3ff; border-radius: 12px; font-size: 15px; margin-bottom: 20px; outline: none; transition: border 0.2s; resize: vertical; min-height: 90px; font-family: inherit; }
+    .note-field:focus { border-color: #4a0080; }
     .prezzo-wrapper { position: relative; margin-bottom: 20px; }
     .prezzo-wrapper .euro { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 18px; font-weight: 700; color: #4a0080; pointer-events: none; }
     .prezzo-wrapper .input-field { padding-left: 36px; margin-bottom: 0; -moz-appearance: textfield; }
@@ -25,15 +27,17 @@
     .btn:active { transform: scale(0.98); }
     .btn-primary { background: linear-gradient(135deg, #6a0dad, #4a0080); color: white; box-shadow: 0 4px 12px rgba(74,0,128,0.3); }
     .btn-secondary { background: #f0e6ff; color: #4a0080; margin-top: 10px; }
+    .btn-success { background: linear-gradient(135deg, #43a047, #2e7d32); color: white; box-shadow: 0 4px 12px rgba(46,125,50,0.3); }
+    .btn-danger { background: linear-gradient(135deg, #e53935, #c0392b); color: white; margin-top: 10px; }
     .feedback { border-radius: 12px; padding: 14px; margin-top: 14px; font-size: 14px; display: none; }
     .feedback.no { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
     .riepilogo { background: #f8f0ff; border-radius: 14px; padding: 18px; margin-bottom: 20px; border: 2px solid #e8d5ff; }
-    .riepilogo .cantina-label { font-size: 12px; color: #6a0dad; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-    .riepilogo .cantina-nome { font-size: 22px; font-weight: 900; color: #4a0080; margin-bottom: 12px; }
-    .riepilogo .totale-label { font-size: 12px; color: #6a0dad; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .riepilogo .riga { margin-bottom: 14px; }
+    .riepilogo .riga:last-child { margin-bottom: 0; }
+    .riepilogo .label { font-size: 11px; color: #6a0dad; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .riepilogo .cantina-nome { font-size: 22px; font-weight: 900; color: #4a0080; }
     .riepilogo .totale-valore { font-size: 36px; font-weight: 900; color: #2e7d32; }
-    .btn-success { background: linear-gradient(135deg, #43a047, #2e7d32); color: white; box-shadow: 0 4px 12px rgba(46,125,50,0.3); }
-    .btn-danger { background: linear-gradient(135deg, #e53935, #c0392b); color: white; margin-top: 10px; }
+    .riepilogo .note-valore { font-size: 14px; color: #555; line-height: 1.5; font-style: italic; }
     .status-msg { text-align: center; padding: 14px; border-radius: 12px; font-weight: 700; display: none; margin-top: 14px; font-size: 15px; }
     .status-msg.ok { background: #e8f5e9; color: #2e7d32; }
     .status-msg.no { background: #ffebee; color: #c62828; }
@@ -60,6 +64,10 @@
     <input type="number" class="input-field" id="input-totale" placeholder="Es. 320" min="0" step="0.5">
   </div>
 
+  <div class="domanda">📝 Note <span style="font-size:14px;font-weight:400;color:#aaa;">(opzionale)</span></div>
+  <p class="hint">Annotazioni, particolarità, vini da ricordare...</p>
+  <textarea class="note-field" id="input-note" placeholder="Es. Ottima annata 2021, chiedere del nuovo blend..."></textarea>
+
   <button class="btn btn-primary" onclick="mostraRiepilogo()">Riepilogo →</button>
   <div class="feedback no" id="feedback-input"></div>
 </div>
@@ -67,10 +75,18 @@
 <!-- STEP 2: Riepilogo e conferma -->
 <div class="card" id="card-riepilogo" style="display:none;">
   <div class="riepilogo">
-    <div class="cantina-label">Cantina</div>
-    <div class="cantina-nome" id="riepilogo-cantina"></div>
-    <div class="totale-label">Totale speso</div>
-    <div class="totale-valore" id="riepilogo-totale"></div>
+    <div class="riga">
+      <div class="label">Cantina</div>
+      <div class="cantina-nome" id="riepilogo-cantina"></div>
+    </div>
+    <div class="riga">
+      <div class="label">Totale speso</div>
+      <div class="totale-valore" id="riepilogo-totale"></div>
+    </div>
+    <div class="riga" id="riga-note" style="display:none;">
+      <div class="label">Note</div>
+      <div class="note-valore" id="riepilogo-note"></div>
+    </div>
   </div>
   <button class="btn btn-success" onclick="salva()">💾 Salva in Sheets</button>
   <div class="divider"></div>
@@ -101,6 +117,7 @@
   function mostraRiepilogo() {
     const cantina = document.getElementById('input-cantina').value.trim();
     const totaleVal = document.getElementById('input-totale').value.trim();
+    const note = document.getElementById('input-note').value.trim();
     const totale = parseFloat(totaleVal.replace(',', '.'));
 
     if (!cantina) {
@@ -117,6 +134,15 @@
     document.getElementById('feedback-input').style.display = 'none';
     document.getElementById('riepilogo-cantina').textContent = cantina;
     document.getElementById('riepilogo-totale').textContent = '€ ' + totale.toFixed(2);
+
+    // Mostra note solo se presenti
+    if (note) {
+      document.getElementById('riepilogo-note').textContent = note;
+      document.getElementById('riga-note').style.display = 'block';
+    } else {
+      document.getElementById('riga-note').style.display = 'none';
+    }
+
     document.getElementById('card-input').style.display = 'none';
     document.getElementById('card-riepilogo').style.display = 'block';
   }
@@ -129,13 +155,16 @@
   function salva() {
     const cantina = document.getElementById('input-cantina').value.trim();
     const totale = parseFloat(document.getElementById('input-totale').value.replace(',', '.'));
+    const note = document.getElementById('input-note').value.trim();
 
     const s = document.getElementById('status-riepilogo');
     s.textContent = '💾 Salvataggio in corso...';
     s.className = 'status-msg ok';
     s.style.display = 'block';
 
-    jsonpCall(SCRIPT_URL + '?action=salvaOrdine&cantina=' + encodeURIComponent(cantina) + '&totale=' + totale, function(r) {
+    const url = SCRIPT_URL + '?action=salvaOrdine&cantina=' + encodeURIComponent(cantina) + '&totale=' + totale + '&note=' + encodeURIComponent(note);
+
+    jsonpCall(url, function(r) {
       if (r && r.result === 'ok') {
         s.textContent = '✅ Salvato in Sheets!';
         setTimeout(() => {
@@ -143,6 +172,7 @@
           document.getElementById('card-input').style.display = 'block';
           document.getElementById('input-cantina').value = '';
           document.getElementById('input-totale').value = '';
+          document.getElementById('input-note').value = '';
           s.style.display = 'none';
           document.getElementById('input-cantina').focus();
         }, 2000);
@@ -159,13 +189,14 @@
       document.getElementById('card-input').style.display = 'block';
       document.getElementById('input-cantina').value = '';
       document.getElementById('input-totale').value = '';
+      document.getElementById('input-note').value = '';
       document.getElementById('input-cantina').focus();
     }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('input-cantina').addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('input-totale').focus(); });
-    document.getElementById('input-totale').addEventListener('keypress', e => { if (e.key === 'Enter') mostraRiepilogo(); });
+    document.getElementById('input-totale').addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('input-note').focus(); });
     document.getElementById('input-cantina').focus();
   });
 </script>
